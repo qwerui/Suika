@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 public class EndChecker : MonoBehaviour
 {
+    BoxCollider2D box;
     SpriteRenderer sprite;
     Color color;
     public UIManager ui;
@@ -14,6 +15,7 @@ public class EndChecker : MonoBehaviour
 
     private void Awake() 
     {
+        TryGetComponent(out box);
         TryGetComponent(out sprite);
         color = new Color(0.8f, 0.16f, 0.16f, 1.0f);
         endSequence = DOTween.Sequence();
@@ -27,7 +29,12 @@ public class EndChecker : MonoBehaviour
         });
     }
 
-    private void OnTriggerEnter2D(Collider2D other) 
+    private void Start() 
+    {
+        GameManager.GetManager().OnGameStart += () => box.enabled = true;
+    }
+
+    private void OnTriggerStay2D(Collider2D other) 
     {
         if(other.CompareTag(FRUIT))
         {
@@ -36,6 +43,7 @@ public class EndChecker : MonoBehaviour
             if (fruit.IsDropped)
             {
                 endSequence.Restart();
+                box.enabled = false;
                 GameManager.GetManager().OnGameEnd.Invoke();
             }
         }    

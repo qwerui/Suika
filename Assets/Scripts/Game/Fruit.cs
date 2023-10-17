@@ -35,7 +35,8 @@ public class Fruit : MonoBehaviour
                 bIsReleased = true;
             }
         };
-
+        GameManager.GetManager().OnGameStart += () => rigid.bodyType = RigidbodyType2D.Dynamic;
+        GameManager.GetManager().OnGameEnd += () => rigid.bodyType = RigidbodyType2D.Static;
     }
 
     private void OnEnable() 

@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour, TouchAction.IGameActionActions
         GameManager.GetManager().OnFruitDropped += () => bCanMove = true;
         GameManager.GetManager().OnPause += () => enabled = false;
         GameManager.GetManager().OnResume += () => enabled = true;
+        GameManager.GetManager().OnGameStart += () => bCanMove = true;
         enabled = false;
         bCanMove = true;
     }
